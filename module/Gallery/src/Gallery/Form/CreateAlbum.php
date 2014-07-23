@@ -11,7 +11,8 @@ class CreateAlbum extends Form
 		parent::__construct('createAlbum');
 		$this->setAttribute('action', '');
 		$this->setAttribute('method', 'post');
-		
+        $this->setAttribute('role', 'form');
+
 		$this->add([
 			'type' => 'Gallery\Form\AlbumFieldset',
 			'options' => [
@@ -24,6 +25,7 @@ class CreateAlbum extends Form
 			'attributes' => [
 				'type' => 'submit',
 				'value' => 'Сохранить',
+                'class' => 'btn btn-primary',
 			],
 		]);
 	}

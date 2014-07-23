@@ -17,6 +17,8 @@ class AlbumFieldset extends Fieldset
 			'name' => 'name',
 			'attributes' => [
 				'type' => 'text',
+                'size' => '50',
+                'class' => 'form-control',
 			],
 			'options' => [
 				'label' => 'Название альбома',
@@ -26,7 +28,10 @@ class AlbumFieldset extends Fieldset
 		$this->add([
 			'name' => 'description',
 			'attributes' => [
-				'type' => 'text',
+				'type' => 'textarea',
+                'cols' => '53',
+                'rows' => '3',
+                'class' => 'form-control',
 			],
 			'options' => [
 				'label' => 'Описание альбома',
@@ -37,6 +42,8 @@ class AlbumFieldset extends Fieldset
 			'name' => 'photographer',
 			'attributes' => [
 				'type' => 'text',
+                'size' => '50',
+                'class' => 'form-control',
 			],
 			'options' => [
 				'label' => 'Имя фотографа',
@@ -47,6 +54,7 @@ class AlbumFieldset extends Fieldset
 			'name' => 'email',
 			'attributes' => [
 				'type' => 'email',
+                'class' => 'form-control',
 			],
 			'options' => [
 				'label' => 'Адрес электронной почты',
@@ -57,6 +65,7 @@ class AlbumFieldset extends Fieldset
 			'name' => 'phone',
 			'attributes' => [
 				'type' => 'text',
+                'class' => 'form-control',
 			],
 			'options' => [
 				'label' => 'Номер телефона',
@@ -100,7 +109,9 @@ class AlbumFieldset extends Fieldset
 				'validators' => [
 					[
 						'name' => 'NotEmpty',
-						'message' => 'Пожалуйста введите описание альбома',
+                        'options' => [
+						    'message' => 'Пожалуйста введите описание альбома',
+                        ],
 					],
 					[
 						'name' => 'StringLength',
@@ -122,7 +133,9 @@ class AlbumFieldset extends Fieldset
 				'validators' => [
 					[
 						'name' => 'NotEmpty',
-						'message' => 'Пожалуйста введите имя фотографа',
+                        'options' => [
+						    'message' => 'Пожалуйста введите имя фотографа',
+                         ],
 					],
 					[
 						'name' => 'StringLength',
@@ -136,25 +149,34 @@ class AlbumFieldset extends Fieldset
 			],
 			
 			'email' => [
+                'required' => false,
 				'filters' => [
 					['name' => 'StringTrim'],
 					['name' => 'StripTags'],
 				],
-				'validators' => [
-					'name' => 'EmailAddress',
-					'options' => [
-						'message' => 'Введите корректный email',
-					],
-				],
+                'validators' => [
+                    [
+                        'name' => 'EmailAddress',
+                    ],
+                ],
 			],
 			
 			'phone' => [
+                'required' => false,
 				'filters' => [
 					['name' => 'StringTrim'],
 					['name' => 'StripTags'],
 				],
 				'validators' => [
-					
+                    [
+                        'name' => 'Regex',
+                        'options' => [
+                            'pattern' => '/^\+7\40\(\d{3}\)\40\d{3}\-\d{2}\-\d{2}$/',
+                            'messages' => [
+                                \Zend\Validator\Regex::NOT_MATCH => 'Номер телефона должен соответствовать формату +7 (xxx) xxx-xx-xx',
+                            ],
+                        ],
+                    ],
 				],
 			],
 		];

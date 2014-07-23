@@ -45,4 +45,30 @@ return [
 			__DIR__ . '/../view',
 		],
 	],
+
+    'service_manager' => [
+        'factories' => [
+            'Gallery\Mapper\Album' => function ($sm) {
+                return new \Gallery\Mapper\Album(
+                    $sm->get('Zend\Db\Adapter\Adapter')
+                );
+            },
+
+            'Zend\Db\Adapter\Adapter' => function ($sm) {
+                $config = $sm->get('Config');
+                $dbParams = $config['dbParams'];
+
+                return new Zend\Db\Adapter\Adapter([
+                    'driver' => 'pdo',
+                    'dsn' =>
+                        'mysql:dbname=' . $dbParams['database']
+                        . ';host=' . $dbParams['hostname'],
+                    'database' => $dbParams['database'],
+                    'username' => $dbParams['username'],
+                    'password' => $dbParams['password'],
+                    'hostname' => $dbParams['hostname'],
+                ]);
+            }
+        ],
+    ],
 ];

@@ -8,7 +8,8 @@
 return array(
     'modules' => array(
         'Application',
-        'Gallery'
+        'Gallery',
+//        'TwbBundle',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
