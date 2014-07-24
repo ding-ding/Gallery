@@ -5,7 +5,7 @@ return [
 			'gallery' => [
 				'type' => 'Zend\Mvc\Router\Http\Literal',
 				'options' => [
-					'route' => '/gallery',
+					'route' => '/',
 					'defaults' => [
 						'__NAMESPACE__' => 'Gallery\Controller',
 						'controller'  => 'Album',
@@ -27,6 +27,36 @@ return [
 								
 							],
 						],
+					],
+				],
+			],
+			'album' => [
+				'type' => 'Zend\Mvc\Router\Http\Segment',
+				'options' => [
+					'route' => '/album[/:action[/:id]]',
+					'constarints' => [
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id' => '[0-9]+',
+					],
+					'defaults' => [
+						'__NAMESPACE__' => 'Gallery\Controller',
+						'controller' => 'Album',
+						'action' => 'index',
+					],
+				],
+			],
+			'photo' => [
+				'type' => 'Zend\Mvc\Router\Http\Segment',
+				'options' => [
+					'route' => '/photo[/:action[/:id]]',
+					'constarints' => [
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id' => '[0-9]+',
+					],
+					'defaults' => [
+						'__NAMESPACE__' => 'Gallery\Controller',
+						'controller' => 'Photo',
+						'action' => 'index',
 					],
 				],
 			],
@@ -78,8 +108,4 @@ return [
             }
         ],
     ],
-				
-	'module_config' => [
-		'upload_location' => __DIR__ . '/../data/uploads',
-	],
 ];

@@ -39,7 +39,7 @@ class PhotoFieldset extends Fieldset
 		]);
 		
 		$this->add([
-			'name' => 'file',
+			'name' => 'file_upload',
 			'attributes' => [
 				'type' => 'file',
 				'class' => 'form-control',
@@ -53,7 +53,7 @@ class PhotoFieldset extends Fieldset
 	public function getInputFilterSpecification()
 	{
 		return [
-			'name' => [
+			'title' => [
 				'required' => true,
 				'filters' => [
 					['name' => 'StringTrim'],
@@ -85,8 +85,23 @@ class PhotoFieldset extends Fieldset
 				],
 			],
 			
-			'file' => [
+			'file_upload' => [
 				'required' => true,
+				'filters' => [
+					['name' => 'StringTrim'],
+					['name' => 'StripTags'],
+				],
+				'validators' => [
+					[
+						'name' => 'Zend\Validator\File\IsImage',
+					],
+					[
+						'name' => 'Zend\Validator\File\Extension',
+						'options' => [
+							'extension' => 'png,jpeg,jpg,gif,tiff',
+						],
+					],
+				],
 			],
 		];
 	}

@@ -140,18 +140,19 @@ class AlbumController extends AbstractActionController
 
     public function viewAction()
     {
-		$id = (int)$this->params('id');
+		$albumId = (int)$this->params('id');
 		
 		$mapper = $this->getServiceLocator()
-			->get('Gallery\Mapper\Album');
+			->get('Gallery\Mapper\Photo');
 		
-		$album = $mapper->findById($id)->current();
+		$photos = $mapper->findByAlbumId($albumId);
+		
+//		var_dump($photos->current());
 		
         return new ViewModel([
-			'album' => $album,
+			'albumId' => $albumId,
+			'photos' => $photos,
 		]);
     }
-
-
 }
 

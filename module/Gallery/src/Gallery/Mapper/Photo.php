@@ -29,7 +29,7 @@ class Photo extends TableGateway
             new RowGatewayFeature($this->idCol)
         );
 
-        $this->entityPrototype = new AlbumEntity();
+        $this->entityPrototype = new PhotoEntity();
         $this->hydrator = new \Zend\Stdlib\Hydrator\Reflection;
 	}
 	
@@ -53,6 +53,19 @@ class Photo extends TableGateway
 		$sql = new Sql($this->getAdapter());
 		$select = $sql->select()
 			->from($this->tableName);
+		
+		$stmt = $sql->prepareStatementForSqlObject($select);
+		$results = $stmt->execute();
+		
+		return $this->hydrate($results);
+	}
+	
+	public function findByAlbumId($albumId)
+	{
+		$sql = new Sql($this->adapter);
+		$select = $sql->select()
+			->from($this->tableName)
+			->where('album_id = ' . $albumId);
 		
 		$stmt = $sql->prepareStatementForSqlObject($select);
 		$results = $stmt->execute();

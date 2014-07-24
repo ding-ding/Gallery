@@ -12,5 +12,7 @@
  */
 
 return array(
-    // ...
+    'module_config' => [
+		'upload_location' => __DIR__ . '/../../public/images',
+	],
 );

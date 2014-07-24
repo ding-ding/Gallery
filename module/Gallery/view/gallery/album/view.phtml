@@ -4,7 +4,17 @@ Action: view
 
 <section>
 	<h1>Просмотр альбома</h1>
-	<a href="<?php echo $this->url($this->route, ['controller' => 'photo', 'action' => 'add', 'id' => $this->album['id']]) ?>">
+	<a href="<?php echo $this->url('photo', ['action' => 'add', 'id' => $albumId]) ?>">
 		<button type="button" class="btn btn-primary">Добавить фотографию</button>
 	</a>
+	<br>
+	<?php $i = 0 ?>
+	<?php foreach ($photos as $photo) : ?>
+		<?php ++$i; ?>
+		<br>
+		<!--<img src="<?php // echo '/images/' . $photo->getFile(); ?>">-->
+		<a href="<?php echo '/images/' . $photo->getFile(); ?>" data-lightbox="roadtrip">
+			<img src="<?php echo '/images/' . $photo->getFile(); ?>" width="200">
+		</a>
+	<?php endforeach; ?>
 </section>

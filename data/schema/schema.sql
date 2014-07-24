@@ -23,3 +23,6 @@ CREATE TABLE `photo` (
   FOREIGN KEY (`album_id`) REFERENCES `album` (`id`) ON DELETE CASCADE
 ) COMMENT='' ENGINE='InnoDB' COLLATE 'utf8_general_ci';
 
+ALTER TABLE `photo`
+CHANGE `file` `file_upload` text COLLATE 'utf8_general_ci' NOT NULL COMMENT 'Загружаемый файл' AFTER `address`,
+COMMENT='';

@@ -30,7 +30,7 @@ class Photo
 	 * 
 	 * @var string
 	 */
-    protected $file;
+    protected $file_upload;
     
 	/**
 	 * Дата загрузки фотографии
@@ -78,12 +78,12 @@ class Photo
 
     public function getFile()
     {
-        return $this->file;
+        return $this->file_upload;
     }
 	
     public function setFile($file)
     {
-        $this->file = $file;
+        $this->file_upload = $file;
     }
 
     public function getUploadDate()
