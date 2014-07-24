@@ -10,6 +10,7 @@ use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Update;
 use Zend\Db\Sql\Delete;
+use Zend\Db\Sql\Expression;
 use Gallery\Entity\Album as AlbumEntity;
 
 class Album extends TableGateway
@@ -83,4 +84,47 @@ class Album extends TableGateway
 		
 		return $albums->initialize($results);
 	}
+
+    public function counterDec($albumId, $countPhoto)
+    {
+        $sql = new Sql($this->getAdapter());
+        $update = $sql->update($this->tableName);
+        $update->set(['count_photo' => new Expression('count_photo - 1')]);
+        $update->where("id = $albumId");
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $statement->execute();
+    }
+
+    public function counterInc($albumId)
+    {
+        $sql = new Sql($this->getAdapter());
+        $update = $sql->update($this->tableName);
+        $update->set(['count_photo' => new Expression('count_photo + 1')]);
+        $update->where("id = $albumId");
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $statement->execute();
+    }
+
+    public function countPhoto($albumId)
+    {
+        $sql = new Sql($this->getAdapter());
+        $select = $sql->select()
+            ->from($this->tableName)
+            ->columns(['num' => new Expression('COUNT(*)')])
+            ->where("id = $albumId");
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute();
+
+        return $result->current()['num'];
+    }
+
+    public function addDateTimeLastPhoto($albumId, $date)
+    {
+        $sql = new Sql($this->getAdapter());
+        $update = $sql->update($this->tableName);
+        $update->set(['last_upload_photo' => $date]);
+        $update->where("id = $albumId");
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $results = $statement->execute();
+    }
 }

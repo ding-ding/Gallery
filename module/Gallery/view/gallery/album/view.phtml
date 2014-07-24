@@ -2,19 +2,52 @@ Module: Gallery
 Controller: Album
 Action: view
 
+<style>
+    .padding-large {
+        padding: 20px;
+    }
+
+    .wrap {
+        margin: 0;
+        width: 65%;
+        min-width: 700px;
+        height: 100%;
+        /* text-align: left; */
+        padding: 0;
+        height: 100%;
+    }
+
+    .thumbsarea img {
+        vertical-align: middle;
+        border: solid 5px #d6c9b8;
+        margin: 5px;
+    }
+
+    .thumbsarea img:hover {
+        border: solid 5px #f9ead6;
+    }
+
+</style>
+
 <section>
 	<h1>Просмотр альбома</h1>
 	<a href="<?php echo $this->url('photo', ['action' => 'add', 'id' => $albumId]) ?>">
 		<button type="button" class="btn btn-primary">Добавить фотографию</button>
 	</a>
 	<br>
-	<?php $i = 0 ?>
-	<?php foreach ($photos as $photo) : ?>
-		<?php ++$i; ?>
-		<br>
-		<!--<img src="<?php // echo '/images/' . $photo->getFile(); ?>">-->
-		<a href="<?php echo '/images/' . $photo->getFile(); ?>" data-lightbox="roadtrip">
-			<img src="<?php echo '/images/' . $photo->getFile(); ?>" width="200">
-		</a>
-	<?php endforeach; ?>
+
+    <div class="wrap">
+        <div class="thumbsarea padding-large">
+            <?php foreach ($photos as $photo) : ?>
+                <br>
+                <a href="<?php echo '/images/' . $photo->getFile(); ?>"
+                   rel="lightbox[album]"
+                   title="<?php echo $photo->getTitle(); ?> <br> Место съемки:<?php echo $photo->getAddress(); ?>">
+                    <img src="<?php echo '/images/' . $photo->getFile(); ?>" border="0" width="250">
+                </a>
+                <span>Заголовок: <?php echo $photo->getTitle(); ?></span>
+                <span><a href="<?php echo $this->url('photo', ['action' => 'delete', 'id' => $photo->getId()], [], false); ?>">Удалить</a></span>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </section>

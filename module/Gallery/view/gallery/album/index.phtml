@@ -3,19 +3,40 @@ Action "index", controller "Album", module "Gallery".
 <section>
 	<h1>Все альбомы</h1>
 	<table class="table table-bordered">
-	<?php foreach ($this->albums as $album) : ?>
-		<tr>
-			<td>
-				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'view', 'id' => $album->getId()], [], false); ?>">
-					<?php echo $album->getName(); ?>
-				</a>
-			</td>
-			<td>
-				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'edit', 'id' => $album->getId()], [], false); ?>">Редактировать</a>
-				|
-				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'delete', 'id' => $album->getId()], [], false); ?>">Удалить</a>
-			</td>
-		</tr>
-	<?php endforeach; ?>
+    <thead>
+        <td>Название</td>
+        <td>Краткое описание</td>
+        <td>Фотограф</td>
+        <td>Информация</td>
+        <td>Управление</td>
+        <?php foreach ($this->albums as $album) : ?>
+            <tr>
+                <td>
+                    <a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'view', 'id' => $album->getId()], [], false); ?>">
+                        <?php echo $album->getName(); ?>
+                    </a>
+                </td>
+                <td>
+                    <?php echo $album->getDescription(); ?>
+                </td>
+                <td>
+                    <?php echo $album->getPhotographer(); ?>
+                </td>
+                <td>
+                    Количество фотографий: <?php echo $album->getCountPhoto(); ?>
+                    <br>
+                    Последняя фотография: <?php echo $album->getLastUploadPhoto() ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'edit', 'id' => $album->getId()], [], false); ?>">Редактировать</a>
+                    |
+                    <a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'delete', 'id' => $album->getId()], [], false); ?>">Удалить</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </thead>
 	</table>
+    <a href="<?php echo $this->url('album', ['action' => 'create'], [], false); ?>">
+        <button type="button" class="btn btn-primary">Добавить альбом</button>
+    </a>
 </section>

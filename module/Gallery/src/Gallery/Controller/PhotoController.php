@@ -16,7 +16,7 @@ class PhotoController extends AbstractActionController
     public function addAction()
     {
 		$albumId = (int)$this->params('id');
-		echo $this->getFileUploadLocation();
+
 		$form = new \Gallery\Form\AddPhoto();
 		
 		if ($this->getRequest()->isPost()) {
@@ -43,25 +43,35 @@ class PhotoController extends AbstractActionController
 				$photo->setUploadDate(date('Y-m-d'));
 				
 				$uploadFile = $fileArray['photo']['file_upload'];
-//				
+
 				$uploadPath = $this->getFileUploadLocation();
 				
 				$fileAdapter = new \Zend\File\Transfer\Adapter\Http();
 				$fileAdapter->setDestination($uploadPath);
 				
 				if ($fileAdapter->receive($uploadFile['name'])) {
-					$filePath = $fileAdapter->getFileName();
-				};
+                    $albumMapper = $this->getServiceLocator()
+                        ->get('Gallery\Mapper\Album');
+                    /**
+                                         *  Увеличиваем на единицу количество фотографий
+                                         */
+                    $albumMapper->counterInc($albumId);
+
+                    /**
+                                         *  Добавляем в альбом дату и время последней загруженной фотографии
+                                         */
+                    $albumMapper->addDateTimeLastPhoto($albumId, date('Y-m-d H:i:s'));
+
+                };
 				
 				$photo->setFile($uploadFile['name']);
 				
 				$photo->setAlbumId($albumId);
 				
 				$mapper->insert($photo);
-				
-				return $this->redirect()->toRoute('album', 
-					['action' => 'view'],
-					['id' => $albumId]
+
+                return $this->redirect()->toRoute('album',
+					['action' => 'view', 'id' => $albumId]
 				);
 				
 			} else {
@@ -75,7 +85,28 @@ class PhotoController extends AbstractActionController
 
     public function deleteAction()
     {
-        return new ViewModel();
+        $photoId = (int)$this->params('id');
+
+        $photoMapper = $this->getServiceLocator()
+            ->get('Gallery\Mapper\Photo');
+        $albumMapper = $this->getServiceLocator()
+            ->get('Gallery\Mapper\Album');
+
+        $albumId = $photoMapper->getAlbumId($photoId);
+        $countPhoto = $albumMapper->countPhoto($albumId);
+
+        $photoMapper->delete('id = ' . $photoId);
+
+        $albumMapper->counterDec($albumId);
+
+        if ($countPhoto == 0)
+            $albumMapper->addDateTimeLastPhoto($albumId, '');
+
+        return $this->redirect()->toRoute('album', [
+                'controller' => 'album',
+                'action' => 'view',
+                'id' => $albumId,
+        ]);
     }
 
     public function viewAction()

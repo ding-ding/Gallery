@@ -38,6 +38,7 @@ class AlbumController extends AbstractActionController
 				$date = date('Y-m-d');
 				$newAlbum->setCreationDate($date);
 				$newAlbum->setChangeDate($date);
+                $newAlbum->setCountPhoto(0);
 
                 $mapper->insert($newAlbum);
 
@@ -146,8 +147,6 @@ class AlbumController extends AbstractActionController
 			->get('Gallery\Mapper\Photo');
 		
 		$photos = $mapper->findByAlbumId($albumId);
-		
-//		var_dump($photos->current());
 		
         return new ViewModel([
 			'albumId' => $albumId,

@@ -105,7 +105,47 @@ return [
                     'hostname' => $dbParams['hostname'],
 					'driver_options' => $dbParams['driver_options'],
                 ]);
-            }
+            },
+
+            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+        ],
+    ],
+
+    'navigation' => [
+        'default' => [
+            [
+                'label' => 'Альбомы',
+                'route' => 'album',
+                'pages' => [
+                    [
+                        'label' => 'Добавить новый',
+                        'route' => 'album',
+                        'action' => 'create',
+                    ],
+                    [
+                        'label' => 'Изменить',
+                        'route' => 'album',
+                        'action' => 'edit',
+                    ],
+                    [
+                        'label' => 'Удалить',
+                        'route' => 'album',
+                        'action' => 'delete',
+                    ],
+                    [
+                        'label' => 'Просмотр альбома',
+                        'route' => 'album',
+                        'action' => 'view',
+                        'pages' => [
+                            [
+                                'label' => 'Добавить фото',
+                                'route' => 'photo',
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
 ];

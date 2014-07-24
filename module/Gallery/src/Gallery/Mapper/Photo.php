@@ -82,4 +82,18 @@ class Photo extends TableGateway
 		
 		return $albums->initialize($results);
 	}
+
+    public function getAlbumId($photoId)
+    {
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()
+            ->from($this->tableName)
+            ->columns(['album_id'])
+            ->where("id = $photoId");
+
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        $results = $stmt->execute();
+
+        return $results->current()['album_id'];
+    }
 }
