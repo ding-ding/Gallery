@@ -15,7 +15,22 @@ class PhotoController extends AbstractActionController
 
     public function addAction()
     {
-        return new ViewModel();
+		$form = new \Gallery\Form\AddPhoto();
+		
+		if ($this->getRequest()->isPost()) {
+			$form->setHydrator(new \Zend\Stdlib\Hydrator\Reflection());
+            $form->bind(new \Gallery\Entity\Photo());
+            $form->setData($this->getRequest()->getPost());
+			
+			if ($form->isValid()) {
+				
+			} else {
+				return new ViewModel(['form' => $form,]);
+			}
+			
+		} else {
+	        return new ViewModel(['form' => $form,]);
+		}
     }
 
     public function deleteAction()

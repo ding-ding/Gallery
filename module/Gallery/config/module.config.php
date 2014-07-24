@@ -53,6 +53,12 @@ return [
                     $sm->get('Zend\Db\Adapter\Adapter')
                 );
             },
+					
+			'Gallery\Mapper\Photo' => function ($sm) {
+                return new \Gallery\Mapper\Photo(
+                    $sm->get('Zend\Db\Adapter\Adapter')
+                );
+            },
 
             'Zend\Db\Adapter\Adapter' => function ($sm) {
                 $config = $sm->get('Config');
@@ -72,4 +78,8 @@ return [
             }
         ],
     ],
+				
+	'module_config' => [
+		'upload_location' => __DIR__ . '/../data/uploads',
+	],
 ];

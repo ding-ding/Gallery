@@ -6,7 +6,9 @@ Action "index", controller "Album", module "Gallery".
 	<?php foreach ($this->albums as $album) : ?>
 		<tr>
 			<td>
-				<?php echo $album->getName(); ?>
+				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'view', 'id' => $album->getId()], [], false); ?>">
+					<?php echo $album->getName(); ?>
+				</a>
 			</td>
 			<td>
 				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'edit', 'id' => $album->getId()], [], false); ?>">Редактировать</a>
