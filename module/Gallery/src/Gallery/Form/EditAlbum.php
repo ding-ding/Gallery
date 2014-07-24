@@ -11,6 +11,7 @@ class EditAlbum extends Form
 		parent::__construct('editAlbum');
 		$this->setAttribute('action', '');
 		$this->setAttribute('method', 'post');
+		$this->setAttribute('role', 'form');
 		
 		$this->add([
 			'type' => 'Gallery\Form\AlbumFieldset',
@@ -24,6 +25,7 @@ class EditAlbum extends Form
 			'attributes' => [
 				'type' => 'submit',
 				'value' => 'Обновить',
+				'class' => 'btn btn-primary',
 			],
 		]);
 	}

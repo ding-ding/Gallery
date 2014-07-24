@@ -1,3 +1,26 @@
 Module: Gallery
 Controller: Album
 Action: Edit
+<h1>Редактирование альбома</h1>
+
+<?php $this->form->prepare(); ?>
+<?php echo $this->form()->openTag($this->form); ?>
+<div class="form-group">
+<?php echo $this->formRow($this->form->get('album')->get('name')); ?>
+</div>
+<div class="form-group">
+<?php echo $this->formRow($this->form->get('album')->get('description')); ?>
+</div>
+<div class="form-group">
+<?php echo $this->formRow($this->form->get('album')->get('photographer')); ?>
+</div>
+<div class="form-group">
+<?php echo $this->formRow($this->form->get('album')->get('email')); ?>
+</div>
+<div class="form-group">
+<?php echo $this->formRow($this->form->get('album')->get('phone')); ?>
+</div>
+<div class="form-group">
+<?php echo $this->formSubmit($this->form->get('submit')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

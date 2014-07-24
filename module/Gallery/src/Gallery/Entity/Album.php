@@ -173,6 +173,6 @@ class Album
 	{
 		$this->count_photo = $count_photo;
 	}
-
-
+	
+	
 }

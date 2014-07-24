@@ -29,7 +29,7 @@ class AlbumFieldset extends Fieldset
 			'name' => 'description',
 			'attributes' => [
 				'type' => 'textarea',
-                'cols' => '53',
+                'cols' => '50',
                 'rows' => '3',
                 'class' => 'form-control',
 			],

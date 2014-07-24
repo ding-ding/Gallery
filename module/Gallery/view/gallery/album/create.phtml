@@ -11,20 +11,20 @@ Action: Create
 <?php echo $this->form()->openTag($this->form); ?>
 <div class="form-group">
 <?php echo $this->formRow($this->form->get('album')->get('name')); ?>
-</div class="form-group">
+</div>
 <div class="form-group">
 <?php echo $this->formRow($this->form->get('album')->get('description')); ?>
-</div class="form-group">
+</div>
 <div class="form-group">
 <?php echo $this->formRow($this->form->get('album')->get('photographer')); ?>
-</div class="form-group">
+</div>
 <div class="form-group">
 <?php echo $this->formRow($this->form->get('album')->get('email')); ?>
-</div class="form-group">
+</div>
 <div class="form-group">
 <?php echo $this->formRow($this->form->get('album')->get('phone')); ?>
-</div class="form-group">
+</div>
 <div class="form-group">
 <?php echo $this->formSubmit($this->form->get('submit')); ?>
-</div class="form-group">
+</div>
 <?php echo $this->form()->closeTag(); ?>

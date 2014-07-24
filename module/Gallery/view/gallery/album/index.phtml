@@ -1,1 +1,19 @@
+
 Action "index", controller "Album", module "Gallery".
+<section>
+	<h1>Все альбомы</h1>
+	<table class="table table-bordered">
+	<?php foreach ($this->albums as $album) : ?>
+		<tr>
+			<td>
+				<?php echo $album->getName(); ?>
+			</td>
+			<td>
+				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'edit', 'id' => $album->getId()], [], false); ?>">Редактировать</a>
+				|
+				<a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'delete', 'id' => $album->getId()], [], false); ?>">Удалить</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+</section>

@@ -67,6 +67,7 @@ return [
                     'username' => $dbParams['username'],
                     'password' => $dbParams['password'],
                     'hostname' => $dbParams['hostname'],
+					'driver_options' => $dbParams['driver_options'],
                 ]);
             }
         ],
