@@ -96,4 +96,48 @@ class Photo extends TableGateway
 
         return $results->current()['album_id'];
     }
+	
+	public function getFileName($photoId)
+	{
+		$sql = new Sql($this->adapter);
+        $select = $sql->select()
+            ->from($this->tableName)
+            ->columns(['file_upload'])
+            ->where("id = $photoId");
+
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        $results = $stmt->execute();
+
+        return $results->current()['file_upload'];
+	}
+	
+	public function getAllPhotosByAlbumId($albumId)
+	{
+		$sql = new Sql($this->adapter);
+        $select = $sql->select()
+            ->from($this->tableName)
+            ->columns(['id','file_upload'])
+            ->where("album_id = $albumId");
+
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        $results = $stmt->execute();
+
+        return $results;
+	}
+	
+	public function getLastPhoto($albumId)
+	{
+		$sql = new Sql($this->adapter);
+        $select = $sql->select()
+            ->from($this->tableName)
+            ->columns(['id','file_upload'])
+            ->where("album_id = $albumId")
+			->order('id DESC')
+			->limit(1);
+	
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        $results = $stmt->execute();
+
+        return $results->current()['file_upload'];
+	}
 }

@@ -1,9 +1,10 @@
-
-Action "index", controller "Album", module "Gallery".
+<?php echo $this->headTitle('Все альбомы') ?>
 <section>
 	<h1>Все альбомы</h1>
+	<?php if (count($this->albums) != 0) : ?>
 	<table class="table table-bordered">
     <thead>
+		<td>Обложка</td>
         <td>Название</td>
         <td>Краткое описание</td>
         <td>Фотограф</td>
@@ -11,6 +12,11 @@ Action "index", controller "Album", module "Gallery".
         <td>Управление</td>
         <?php foreach ($this->albums as $album) : ?>
             <tr>
+				<td>
+					<?php if (!empty($covers[$album->getId()])) : ?>
+						<img src="<?php echo '/images/250_' . $covers[$album->getId()]; ?>">
+					<?php endif; ?>
+				</td>
                 <td>
                     <a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'view', 'id' => $album->getId()], [], false); ?>">
                         <?php echo $album->getName(); ?>
@@ -25,7 +31,9 @@ Action "index", controller "Album", module "Gallery".
                 <td>
                     Количество фотографий: <?php echo $album->getCountPhoto(); ?>
                     <br>
-                    Последняя фотография: <?php echo $album->getLastUploadPhoto() ?>
+					<?php if ($album->getCountPhoto() > 0) : ?>
+						Последняя фотография: <?php echo $album->getLastUploadPhoto() ?>
+					<?php endif; ?>
                 </td>
                 <td>
                     <a href="<?php echo $this->url($this->route, ['controller' => 'album', 'action' => 'edit', 'id' => $album->getId()], [], false); ?>">Редактировать</a>
@@ -36,7 +44,13 @@ Action "index", controller "Album", module "Gallery".
         <?php endforeach; ?>
     </thead>
 	</table>
+	<?php endif; ?>
     <a href="<?php echo $this->url('album', ['action' => 'create'], [], false); ?>">
         <button type="button" class="btn btn-primary">Добавить альбом</button>
     </a>
+	<?php if (count($this->albums) != 0) : ?>
+		<a href="<?php echo $this->url('photo', ['action' => 'add'], [], false); ?>">
+			<button type="button" class="btn btn-primary">Добавить фотографию в галерею</button>
+		</a>
+	<?php endif; ?>
 </section>

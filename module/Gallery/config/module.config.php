@@ -118,12 +118,12 @@ return [
                 'route' => 'album',
                 'pages' => [
                     [
-                        'label' => 'Добавить новый',
+                        'label' => 'Создание альбома',
                         'route' => 'album',
                         'action' => 'create',
                     ],
                     [
-                        'label' => 'Изменить',
+                        'label' => 'Редактирование альбома',
                         'route' => 'album',
                         'action' => 'edit',
                     ],
@@ -136,13 +136,6 @@ return [
                         'label' => 'Просмотр альбома',
                         'route' => 'album',
                         'action' => 'view',
-                        'pages' => [
-                            [
-                                'label' => 'Добавить фото',
-                                'route' => 'photo',
-                                'action' => 'add',
-                            ],
-                        ],
                     ],
                 ],
             ],

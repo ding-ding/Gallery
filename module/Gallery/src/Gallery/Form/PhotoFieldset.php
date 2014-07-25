@@ -93,12 +93,20 @@ class PhotoFieldset extends Fieldset
 				],
 				'validators' => [
 					[
+						'name' => 'Zend\Validator\File\Size',
+						'options' => [
+							'max' => '2MB',
+							'message' => 'Изображение не должно весить более 2 мегабайт'
+						],
+					],
+					[
 						'name' => 'Zend\Validator\File\IsImage',
 					],
 					[
 						'name' => 'Zend\Validator\File\Extension',
 						'options' => [
-							'extension' => 'png,jpeg,jpg,gif,tiff',
+							'extension' => 'png,jpeg,jpg,gif',
+							'message' => 'Изображение должно иметь допустивый формат(png,jpeg,gif)',
 						],
 					],
 				],

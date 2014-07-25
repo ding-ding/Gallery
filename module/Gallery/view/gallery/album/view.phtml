@@ -1,7 +1,4 @@
-Module: Gallery
-Controller: Album
-Action: view
-
+<?php echo $this->headTitle('Просмотр альбома') ?>
 <style>
     .padding-large {
         padding: 20px;
@@ -42,10 +39,10 @@ Action: view
                 <br>
                 <a href="<?php echo '/images/' . $photo->getFile(); ?>"
                    rel="lightbox[album]"
-                   title="<?php echo $photo->getTitle(); ?> <br> Место съемки:<?php echo $photo->getAddress(); ?>">
-                    <img src="<?php echo '/images/' . $photo->getFile(); ?>" border="0" width="250">
+                   title="<?php echo $photo->getTitle(); ?> Место съемки:<?php echo $photo->getAddress(); ?>">
+                    <img src="<?php echo '/images/250_' . $photo->getFile(); ?>" border="0" width="250">
                 </a>
-                <span>Заголовок: <?php echo $photo->getTitle(); ?></span>
+                <span>Заголовок: <b><?php echo $photo->getTitle(); ?></b></span>
                 <span><a href="<?php echo $this->url('photo', ['action' => 'delete', 'id' => $photo->getId()], [], false); ?>">Удалить</a></span>
             <?php endforeach; ?>
         </div>

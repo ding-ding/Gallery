@@ -1,21 +1,34 @@
-Module: Gallery
-Controller: Photo
-Action: add
-
+<?php echo $this->headTitle('Добавление фото') ?>
 <section>
 	<h1>Добавить фото</h1>
 	
 	<?php $this->form->prepare(); ?>
 	<?php echo $this->form()->openTag($this->form); ?>
+	
+	<?php
+		try
+		{
+			echo '<div class="form-group" style="width:300px;">';
+			echo $this->formSelect($this->form->get('album_id'));
+			echo '</div>';
+		}
+		catch (Exception $e)
+		{
+		}
+	?>
+	
 	<div class="form-group">
 	<?php echo $this->formRow($this->form->get('photo')->get('title')); ?>
 	</div>
+	
 	<div class="form-group">
 	<?php echo $this->formRow($this->form->get('photo')->get('address')); ?>
 	</div>
+	
 	<div class="form-group">
 	<?php echo $this->formRow($this->form->get('photo')->get('file_upload')); ?>
 	</div>
+	
 	<div class="form-group">
 	<?php echo $this->formSubmit($this->form->get('submit')); ?>
 	</div>

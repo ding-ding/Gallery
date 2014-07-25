@@ -14,9 +14,11 @@ class AlbumController extends AbstractActionController
 			->get('Gallery\Mapper\Album');
 		
 		$albums = $mapper->fetchAll();
+		$covers = $this->getCovers();
 		
         return new ViewModel([
 			'albums' => $albums,
+			'covers' => $covers,
 		]);
     }
 
@@ -90,10 +92,7 @@ class AlbumController extends AbstractActionController
 				
                 $mapper->update($album, 'id = ' . $id);
 				
-				return $this->redirect()->toRoute($this->route, 
-					['controller' => 'album'],
-					['action' => 'index']
-				);
+				return $this->redirect()->toRoute('album');
             } else {
 				$form->get('album')->get('name')->setValue($albumOld['name']);
 				$form->get('album')->get('description')->setValue($albumOld['description']);
@@ -131,10 +130,10 @@ class AlbumController extends AbstractActionController
 		$mapper = $this->getServiceLocator()
             ->get('Gallery\Mapper\Album');
 		
+		$this->deleteAllPhotos($id);
 		$mapper->delete('id = ' . $id);
 		
-		return $this->redirect()->toRoute($this->route, 
-			['controller' => 'album'],
+		return $this->redirect()->toRoute('album', 
 			['action' => 'index']
 		);
     }
@@ -153,5 +152,55 @@ class AlbumController extends AbstractActionController
 			'photos' => $photos,
 		]);
     }
+	
+	public function deleteAllPhotos($albumId)
+	{
+		$photoMapper = $this->getServiceLocator()
+			->get('Gallery\Mapper\Photo');
+		
+		$photos = $photoMapper->getAllPhotosByAlbumId($albumId);
+		
+		foreach ($photos as $photo)
+		{
+			$uploadLocation = $this->getFileUploadLocation();
+			$fileName = $photo['file_upload'];
+			try
+			{
+				unlink($uploadLocation . '/' . $fileName);
+				unlink($uploadLocation . '/250_' . $fileName);
+			}
+			catch (Exception $e)
+			{
+				echo 'Невозможно удалить фотографии:', $e->getMessage();
+			}
+
+			$photoMapper->delete(['id' => $photo['id']]);
+		}
+	}
+	
+	public function getFileUploadLocation()
+	{
+		$config = $this->getServiceLocator()->get('Config');
+		
+		return $config['module_config']['upload_location'];
+	}
+	
+	public function getCovers()
+	{
+		$covers = [];
+		
+		$photoMapper = $this->getServiceLocator()
+			->get('Gallery\Mapper\Photo');
+		$albumMapper = $this->getServiceLocator()
+			->get('Gallery\Mapper\Album');
+		
+		$albums = $albumMapper->getAlbumIds();
+		foreach ($albums as $album)
+		{
+			$covers[$album['id']] = $photoMapper->getLastPhoto($album['id']);
+		}
+		
+		return $covers;
+	}
 }
 

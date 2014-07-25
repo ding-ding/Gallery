@@ -85,7 +85,7 @@ class Album extends TableGateway
 		return $albums->initialize($results);
 	}
 
-    public function counterDec($albumId, $countPhoto)
+    public function counterDec($albumId)
     {
         $sql = new Sql($this->getAdapter());
         $update = $sql->update($this->tableName);
@@ -127,4 +127,17 @@ class Album extends TableGateway
         $statement = $sql->prepareStatementForSqlObject($update);
         $results = $statement->execute();
     }
+	
+	public function getAlbumIds()
+	{
+		$sql = new Sql($this->adapter);
+        $select = $sql->select()
+            ->from($this->tableName)
+            ->columns([new Expression('DISTINCT(id) as id')]);
+
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        $results = $stmt->execute();
+
+        return $results;
+	}
 }
