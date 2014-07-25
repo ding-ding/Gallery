@@ -12,23 +12,6 @@ return [
 						'action'	  => 'index',
 					],
 				],
-				'may_terminate' => true,
-				'child_routes' => [
-					'default' => [
-						'type' => 'Zend\Mvc\Router\Http\Segment',
-						'options' => [
-							'route' => '/[:controller[/:action[/:id]]]',
-							'constraints' => [
-								'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-								'action'	 => '[a-zA-Z][a-zA-Z0-9_-]*',
-								'id'		 => '[0-9]+',
-							],
-							'defaults' => [
-								
-							],
-						],
-					],
-				],
 			],
 			'album' => [
 				'type' => 'Zend\Mvc\Router\Http\Segment',
